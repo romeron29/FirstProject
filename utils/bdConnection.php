@@ -4,7 +4,7 @@ function getConnection(){
     $host = "localhost";
     $user = "root";
     $pass = "";
-    $database = "newsProject";
+    $database = "newsproject";
     $connect = mysqli_connect($host,$user,$pass);
     mysqli_select_db($connect,$database);
     return $connect;
