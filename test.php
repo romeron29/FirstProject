@@ -1,0 +1,3 @@
+<?php 
+echo "ERROR EN LA INSERCION DE DATOS";
+?>

@@ -1,5 +1,5 @@
 <?php 
-
+    include("bdConnection.php");
     function getCountries(){
         //$count = array("Afganistán","Albania","Alemania","Andorra","Angola","Antigua y Barbuda","Arabia Saudita","Argelia","Argentina","Armenia","Australia","Austria","Azerbaiyán","Bahamas","Bangladés","Barbados","Baréin","Bélgica","Belice","Benín","Bielorrusia","Birmania","Bolivia","Bosnia y Herzegovina","Botsuana","Brasil","Brunéi","Bulgaria","Burkina Faso","Burundi","Bután","Cabo Verde","Camboya","Camerún","Canadá","Catar","Chad","Chile","China","Chipre","Ciudad del Vaticano","Colombia","Comoras","Corea del Norte","Corea del Sur","Costa de Marfil","Costa Rica","Croacia","Cuba","Dinamarca","Dominica","Ecuador","Egipto","El Salvador","Emiratos Árabes Unidos","Eritrea","Eslovaquia","Eslovenia","España","Estados Unidos","Estonia","Etiopía","Filipinas","Finlandia","Fiyi","Francia","Gabón","Gambia","Georgia","Ghana","Granada","Grecia","Guatemala","Guyana","Guinea","Guinea ecuatorial","Guinea-Bisáu","Haití","Honduras","Hungría","India","Indonesia","Irak","Irán","Irlanda","Islandia","Islas Marshall","Islas Salomón","Israel","Italia","Jamaica","Japón","Jordania","Kazajistán","Kenia","Kirguistán","Kiribati","Kuwait","Laos","Lesoto","Letonia","Líbano","Liberia","Libia","Liechtenstein","Lituania","Luxemburgo","Madagascar","Malasia","Malaui","Maldivas","Malí","Malta","Marruecos","Mauricio","Mauritania","México","Micronesia","Moldavia","Mónaco","Mongolia","Montenegro","Mozambique","Namibia","Nauru","Nepal","Nicaragua","Níger","Nigeria","Noruega","Nueva Zelanda","Omán","Países Bajos","Pakistán","Palaos","Palestina","Panamá","Papúa Nueva Guinea","Paraguay","Perú","Polonia","Portugal","Reino Unido","República Centroafricana","República Checa","República de Macedonia","República del Congo","República Democrática del Congo","República Dominicana","República Sudafricana","Ruanda","Rumanía","Rusia","Samoa","San Cristóbal y Nieves","San Marino","San Vicente y las Granadinas","Santa Lucía","Santo Tomé y Príncipe","Senegal","Serbia","Seychelles","Sierra Leona","Singapur","Siria","Somalia","Sri Lanka","Suazilandia","Sudán","Sudán del Sur","Suecia","Suiza","Surinam","Tailandia","Tanzania","Tayikistán","Timor Oriental","Togo","Tonga","Trinidad y Tobago","Túnez","Turkmenistán","Turquía","Tuvalu","Ucrania","Uganda","Uruguay","Uzbekistán","Vanuatu","Venezuela","Vietnam","Yemen","Yibuti","Zambia","Zimbabue");
 
@@ -44,6 +44,42 @@
         
     }
 
+    function saveUser($user){
+        $inserted = false;
+        $conn = getConnection();
+        $role = 2;
+        $userId = 0 ;
+
+        $firstName = $user['firstName'];
+        $lastName = $user['lastName'];
+        $email = $user['email'];
+        $password = $user['password'];
+        $country = $user['country'];
+        $city = $user['city'];
+        $address =  $user['address'];
+        $secondAddress = $user['secondAddress'];
+        $postalCode = $user['postalCode'];
+        $phone = $user['phone'];
+
+
+        $script = "INSERT INTO users (first_name, last_name, role_id) VALUES('$firstName', '$lastName', '$role')";
+        
+        if(mysqli_query($conn, $script)){
+            $userId = mysqli_insert_id($conn);
+            $script = "INSERT INTO access (username, user_password, user_id) VALUES('$email', '$password', '$userId')";
+            if(mysqli_query($conn, $script)){
+                $script = "INSERT INTO addresses (country, city, address,second_address,postal_code,user_id) VALUES('$country', '$city', '$address','$secondAddress','$postalCode','$userId')";
+                if(mysqli_query($conn, $script)){
+                    $script = "INSERT INTO phone_numbers (phone_number, id_user) VALUES('$phone', '$userId')";
+                    if(mysqli_query($conn, $script)){
+                        $inserted = true;
+                    }
+                }
+            }
+           
+        }
+        return $inserted;
+        };
 
 
 ?>
