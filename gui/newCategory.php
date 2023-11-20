@@ -7,12 +7,12 @@
 </head>
 <body>
     <div class="form-container">
-        <form action="" method="post">
+        <form action="../logic/cCategory.php" method="post">
             <p>New Categorie</p>
-            <input type="email" name="email" id="email" placeholder="Name">
-            <input type="submit" value="Send">
-        </form>
-
+            <input type="text" name="categoryName" id="categoryName" placeholder="Category Name">
+            <input type="submit" value="Save">
+        </form> 
     </div>
+
 </body>
 </html>

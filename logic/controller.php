@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    include('utils/bdConnection.php');
+    include('../utils/bdConnection.php');
     $conn = getConnection();    
 
 
@@ -24,7 +24,9 @@
             echo $info['first_name'];
             $_SESSION['user']=$info['first_name'];
             if($info['role_name']=='admin'){
-                header('location:admin.php');
+                header('location: ../gui/admin.php');
+            }else{
+                
             }
         }else
         {

@@ -1,5 +1,5 @@
 <?php
-    include("utils/functions.php");
+    include("../utils/functions.php");
     $countries = getCountries();
 ?>
 
@@ -11,17 +11,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SignUp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/secondStyle.css">
+    <link rel="stylesheet" href="../css/secondStyle.css">
 </head>
 
 <body>
     <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container-fluid justify-content-between">
             <a class="navbar-brand" href="#">
-                <img src="images/news.png" width="70" alt="logo">
+                <img src="../images/news.png" width="70" alt="logo">
             </a>
             <a href="signIn.html"><button type="button"  class="btn btn-secondary">Login</button></a>
-            
         </div>
     </nav>
 
@@ -33,7 +32,7 @@
 
         <div class="row align-items-center">
             <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
-                <form method="post" action="logic/register.php" enctype="multipart/form-data">
+                <form method="post" action="../logic/register.php" enctype="multipart/form-data">
                     <div class="row" >
                         <div class="co2-sm-6 col-md-6 col-lg-6 col-xl-6">
                             <label for="first-name">First Name</label>
@@ -104,7 +103,7 @@
                 </form>
             </div>
             <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
-                <img src="images/news.jpg" width="500" alt="">
+                <img src="../images/news.jpg" width="500" alt="">
             </div>
         </div>
         

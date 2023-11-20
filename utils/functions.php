@@ -43,13 +43,13 @@
 
         
     }
-
+    /*Save all the user information in the Database*/
     function saveUser($user){
         $inserted = false;
         $conn = getConnection();
-        $role = 2;
+        $role = 2; /*Rol for default to users*/
         $userId = 0 ;
-
+        
         $firstName = $user['firstName'];
         $lastName = $user['lastName'];
         $email = $user['email'];
@@ -62,24 +62,70 @@
         $phone = $user['phone'];
 
 
-        $script = "INSERT INTO users (first_name, last_name, role_id) VALUES('$firstName', '$lastName', '$role')";
+        $sql = "INSERT INTO users (first_name, last_name, role_id) VALUES('$firstName', '$lastName', '$role')";
         
-        if(mysqli_query($conn, $script)){
+        if(mysqli_query($conn, $sql)){
+            /*Use the last inserted Id to save it like the foreing key in other tables.*/
             $userId = mysqli_insert_id($conn);
-            $script = "INSERT INTO access (username, user_password, user_id) VALUES('$email', '$password', '$userId')";
-            if(mysqli_query($conn, $script)){
-                $script = "INSERT INTO addresses (country, city, address,second_address,postal_code,user_id) VALUES('$country', '$city', '$address','$secondAddress','$postalCode','$userId')";
-                if(mysqli_query($conn, $script)){
-                    $script = "INSERT INTO phone_numbers (phone_number, id_user) VALUES('$phone', '$userId')";
-                    if(mysqli_query($conn, $script)){
+            $sql = "INSERT INTO access (username, user_password, user_id) VALUES('$email', '$password', '$userId')";
+            if(mysqli_query($conn, $sql)){
+                $sql = "INSERT INTO addresses (country, city, address,second_address,postal_code,user_id) VALUES('$country', '$city', '$address','$secondAddress','$postalCode','$userId')";
+                if(mysqli_query($conn, $sql)){
+                    $sql = "INSERT INTO phone_numbers (phone_number, id_user) VALUES('$phone', '$userId')";
+                    if(mysqli_query($conn, $sql)){
                         $inserted = true;
                     }
                 }
             }
-           
+
         }
+        mysqli_close($conn);
         return $inserted;
-        };
+    };
+    function saveCategorie($categoryName){
+        $conn = getConnection();
+        $saved = false;
+        $sql = "Insert into categories (category_name) values ('$categoryName');";
+        if(mysqli_query($conn, $sql)){
+            $saved = true;
+        }
+        mysqli_close($conn);
+        return $saved;
+    }
 
-
+    /*Get all categories*/
+    function getCategories(){
+        $categories = array();
+        $conn = getConnection();
+        $sql = "select * from categories;";
+        if($result = mysqli_query($conn, $sql)){
+            while($row = mysqli_fetch_array($result)):{
+                $categories[$row['id']] = $row['category_name'];
+            }endwhile;   
+        }
+        mysqli_close($conn);
+        return $categories;
+    }
+    function updateCategory($id,$newCategoryName){
+        $updated = false;
+        $conn = getConnection();
+        $sql = "Update categories set category_name  = '$newCategoryName' where id = '$id';";
+        echo $sql;
+        if(mysqli_query($conn, $sql)){
+            $updated = true;
+        }
+        mysqli_close($conn);
+        return $updated;
+    }
+    function deleteCategory($id){
+        $deleted = false;
+        $conn = getConnection();
+        $sql = "Delete from categories where id = $id;";
+        if(mysqli_query($conn, $sql)){
+            $deleted = true;
+        }
+        mysqli_close($conn);
+        return $deleted;
+    }
+      
 ?>
