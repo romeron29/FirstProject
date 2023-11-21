@@ -15,14 +15,7 @@
 </head>
 
 <body>
-    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-        <div class="container-fluid justify-content-between">
-            <a class="navbar-brand" href="#">
-                <img src="../images/news.png" width="70" alt="logo">
-            </a>
-            <a href="signIn.html"><button type="button"  class="btn btn-secondary">Login</button></a>
-        </div>
-    </nav>
+    <?php include("../inc/navAdmin.php"); var_dump($_SESSION);?>
 
     <div class="container">
         <div class="display-6 row" >

@@ -33,16 +33,7 @@
             "VNM" => "Vietnam", "YEM" => "Yemen", "DJI" => "Yibuti", "ZMB" => "Zambia", "ZWE" => "Zimbabue"];
             return $countries;
         }
-    function checkUser(){
-        /*$script = 'select u.first_name, r.id as "Id de rol", r.role_name from users as u 
-        inner join access as ac
-        on u.id = ac.id
-        inner join roles as r 
-        on u.role_id = r.id
-        where  ac.username = 'rom.nr57@gmail.com' && ac.user_password  = 'rom1324';;*/
 
-        
-    }
     /*Save all the user information in the Database*/
     function saveUser($user){
         $inserted = false;
@@ -60,7 +51,7 @@
         $secondAddress = $user['secondAddress'];
         $postalCode = $user['postalCode'];
         $phone = $user['phone'];
-
+            
 
         $sql = "INSERT INTO users (first_name, last_name, role_id) VALUES('$firstName', '$lastName', '$role')";
         
@@ -106,10 +97,10 @@
         mysqli_close($conn);
         return $categories;
     }
-    function updateCategory($id,$newCategoryName){
+    function updateCategory($id,$url,$newCategoryName,$category_id){
         $updated = false;
         $conn = getConnection();
-        $sql = "Update categories set category_name  = '$newCategoryName' where id = '$id';";
+        $sql = "update news_sources set url = '$url', name = '$newCategoryName',category_id = '$category_id' where id = '$id';";
         echo $sql;
         if(mysqli_query($conn, $sql)){
             $updated = true;
@@ -120,12 +111,75 @@
     function deleteCategory($id){
         $deleted = false;
         $conn = getConnection();
-        $sql = "Delete from categories where id = $id;";
+        $sql = "Delete from categories where id = '$id';";
         if(mysqli_query($conn, $sql)){
             $deleted = true;
         }
         mysqli_close($conn);
         return $deleted;
     }
-      
+
+    /*Sources functions*/
+
+
+    function saveSource($url,$name,$categoryId,$userId){
+        $conn = getConnection();
+        $saved = false;
+        $sql2 = "Insert into news_sources(url,name,category_id,user_id) values ('$url','$name','$categoryId','$userId');";
+        if(mysqli_query($conn, $sql2)){
+            $saved = true;
+        }
+        mysqli_close($conn);
+        return $saved;
+    }
+
+    /*Get all Sources*/
+    function getSources(){
+        $sources = array();
+        $conn = getConnection();
+        $sql = "select ns.id, ns.name, c.category_name from news_sources as ns
+                inner join categories as c
+                on ns.category_id = c.id;";
+        
+        if($result = mysqli_query($conn, $sql)){
+            while($row = mysqli_fetch_array($result)):{
+                $sources [] = array('id'=>$row['id'],'name'=> $row['name'],'category'=>$row['category_name']);
+            }endwhile;   
+        }
+        mysqli_close($conn);
+        return $sources;
+    }
+    /*Get only one source row*/
+    function getSource($id){
+        $row = [];
+        $conn = getConnection();
+        $sql = "select * from news_sources where id = '$id';";
+        
+        if($result = mysqli_query($conn, $sql)){
+            $row = mysqli_fetch_array($result); 
+        }
+        mysqli_close($conn);
+        return $row;
+    }
+
+    function updateSource($id,$url,$newSourceName,$category){
+        $updated = false;
+        $conn = getConnection();
+        $sql = "update news_sources set url = '$url', name = '$newSourceName',category_id = '$category' where id = '$id';";
+        if(mysqli_query($conn, $sql)){
+            $updated = true;
+        }
+        mysqli_close($conn);
+        return $updated;
+    }
+    function deleteSource($id){
+        $deleted = false;
+        $conn = getConnection();
+        $sql = "Delete from news_sources where id = '$id';";
+        if(mysqli_query($conn, $sql)){
+            $deleted = true;
+        }
+        mysqli_close($conn);
+        return $deleted;
+    }    
 ?>

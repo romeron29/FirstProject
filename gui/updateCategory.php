@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UpdateCategory</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/secondStyle.css">
+    <link rel="stylesheet" href="../css/secondStyle.css">
 </head>
 <body>
     <div class="container">
@@ -18,13 +18,13 @@
         </div>
         <div class="row">
             <form action="../logic/uCategory.php" method="post">
-                <div class="co2-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                     <label for="categoryId">Category ID</label>
-                    <?php $id = $_GET['id']; echo $id?>
-                    <input type="text" name="categoryId"  value= "<?= $id?>" >
+                    <?php $id = $_GET['id'];?>
+                    <input type="text" name="categoryId" readonly  value= "<?= $id?> " >
                 </div>
 
-                <div class="co2-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 py-3">
                     <label for="categoryName">New Category Name</label>
                     <input type="text" name="categoryName" placeholder="Category Name">
                 </div>

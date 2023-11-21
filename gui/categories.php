@@ -9,11 +9,11 @@
 </head>
 <body>
     <?php 
-    include ("../inc/navbar.php");
+    include ("../inc/navAdmin.php");
     include ("../utils/functions.php");
-    
-    ?>
 
+    ?>
+    <?php var_dump($_SESSION);?>
     <div class="container-fluid py-3 px-3">
         <div class="row py-3">
             
@@ -21,6 +21,10 @@
                 <h2>
                     Categories
                 </h2>
+                <h3>
+                    Welcome
+                    <?php ?>
+                </h3>
                 <table>
                     <thead>
                         
@@ -39,9 +43,8 @@
                             <tr>
                                 <th><?= $id?></th>
                                 <th><?= $val?></th>
-                                <th><a href="updateCategory.php?id=<?= $row['id']?>">Update</a></th>
-                                <th><a href="delete.php?id=<?= $row['id']?>">Delete</a></th>
-                                
+                                <th><a href="updateCategory.php?id=<?= $id?>">Update</a></th>
+                                <th><a href="../logic/dCategory.php?id=<?= $id?>">Delete</a></th>
                             </tr>
                         <?php
                         endforeach;
